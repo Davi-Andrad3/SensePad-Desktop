@@ -22,3 +22,8 @@ if __name__ == "__main__":
         asyncio.run(iniciar_servidor_ble(SERVICE_UUID, CHAR_UUID))
     except KeyboardInterrupt:
         print("\nServidor encerrado pelo usuário (Ctrl+C).")
+    except Exception as e:
+        print(f"\nOcorreu um erro fatal: {e}")
+    finally:
+        print("\nO programa foi finalizado.")
+        input("Pressione ENTER para fechar esta janela...")

@@ -58,6 +58,7 @@ def processar_payload(dados_bytes: bytes):
     try:
         if cmd == CMD_MOVER_MOUSE and len(dados_bytes) >= 3:
             dx, dy = struct.unpack('bb', dados_bytes[1:3])
+            logger.info(f"Mouse MOVE: dx={dx}, dy={dy}")
             mover_mouse(dx, dy)
 
         elif cmd == CMD_CLIQUE_ESQUERDO:

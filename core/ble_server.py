@@ -51,10 +51,10 @@ async def iniciar_servidor_ble(service_uuid: str, char_uuid: str):
 
     # ── 2. Define a Característica de Escrita ───────────────
     params = GattLocalCharacteristicParameters()
-    # WRITE_WITHOUT_RESPONSE foi removido: é incompatível com encriptação GATT.
-    # Apenas WRITE (com resposta) suporta ENCRYPTION_AND_AUTHENTICATION_REQUIRED.
+    # Restaurado WRITE_WITHOUT_RESPONSE para permitir o envio de alta frequência do mouse
     params.characteristic_properties = (
         GattCharacteristicProperties.WRITE
+        | GattCharacteristicProperties.WRITE_WITHOUT_RESPONSE
         | GattCharacteristicProperties.READ
     )
     # SEGURANÇA: Força o emparelhamento nativo do Windows antes de aceitar dados.

@@ -135,55 +135,31 @@ VK_WHITELIST: frozenset[int] = frozenset({
 # --- FUNÇÕES PÚBLICAS ---
 
 def mover_mouse(dx: int, dy: int):
-    """Move o cursor de forma incremental e relativa à posição atual usando SendInput."""
+    """Move o cursor de forma incremental e relativa à posição atual usando mouse_event."""
     try:
-        extra = ctypes.c_ulong(0)
-        ii_ = INPUT_UNION()
-        ii_.mi = MOUSEINPUT(dx, dy, 0, MOUSEEVENTF_MOVE, 0, ctypes.pointer(extra))
-        command = INPUT(INPUT_MOUSE, ii_)
-        ctypes.windll.user32.SendInput(1, ctypes.pointer(command), ctypes.sizeof(command))
+        ctypes.windll.user32.mouse_event(MOUSEEVENTF_MOVE, dx, dy, 0, 0)
     except Exception as e:
         logger.error(f"Erro ao mover mouse: {e}")
 
 def clique_esquerdo():
-    """Executa um clique esquerdo completo (down e up) usando SendInput."""
+    """Executa um clique esquerdo completo (down e up) usando mouse_event."""
     try:
-        extra = ctypes.c_ulong(0)
-        
-        ii_down = INPUT_UNION()
-        ii_down.mi = MOUSEINPUT(0, 0, 0, MOUSEEVENTF_LEFTDOWN, 0, ctypes.pointer(extra))
-        cmd_down = INPUT(INPUT_MOUSE, ii_down)
-        
-        ii_up = INPUT_UNION()
-        ii_up.mi = MOUSEINPUT(0, 0, 0, MOUSEEVENTF_LEFTUP, 0, ctypes.pointer(extra))
-        cmd_up = INPUT(INPUT_MOUSE, ii_up)
-        
-        input_array = (INPUT * 2)(cmd_down, cmd_up)
-        ctypes.windll.user32.SendInput(2, input_array, ctypes.sizeof(INPUT))
+        ctypes.windll.user32.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        ctypes.windll.user32.mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
     except Exception as e:
         logger.error(f"Erro no clique esquerdo: {e}")
 
 def clique_direito():
-    """Executa um clique direito completo (down e up) usando SendInput."""
+    """Executa um clique direito completo (down e up) usando mouse_event."""
     try:
-        extra = ctypes.c_ulong(0)
-        
-        ii_down = INPUT_UNION()
-        ii_down.mi = MOUSEINPUT(0, 0, 0, MOUSEEVENTF_RIGHTDOWN, 0, ctypes.pointer(extra))
-        cmd_down = INPUT(INPUT_MOUSE, ii_down)
-        
-        ii_up = INPUT_UNION()
-        ii_up.mi = MOUSEINPUT(0, 0, 0, MOUSEEVENTF_RIGHTUP, 0, ctypes.pointer(extra))
-        cmd_up = INPUT(INPUT_MOUSE, ii_up)
-        
-        input_array = (INPUT * 2)(cmd_down, cmd_up)
-        ctypes.windll.user32.SendInput(2, input_array, ctypes.sizeof(INPUT))
+        ctypes.windll.user32.mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
+        ctypes.windll.user32.mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
     except Exception as e:
         logger.error(f"Erro no clique direito: {e}")
 
 def scroll_vertical(delta: int):
     """
-    Scroll vertical com o mouse usando SendInput.
+    Scroll vertical com o mouse usando mouse_event.
     No Windows, scroll para cima necessita de valor positivo (WHEEL_DELTA positivo),
     e para baixo de valor negativo (WHEEL_DELTA negativo).
     Como dy vem como delta de scroll (positivo para cima, negativo para baixo),
@@ -191,11 +167,7 @@ def scroll_vertical(delta: int):
     """
     try:
         amount = delta * WHEEL_DELTA
-        extra = ctypes.c_ulong(0)
-        ii_ = INPUT_UNION()
-        ii_.mi = MOUSEINPUT(0, 0, amount, MOUSEEVENTF_WHEEL, 0, ctypes.pointer(extra))
-        command = INPUT(INPUT_MOUSE, ii_)
-        ctypes.windll.user32.SendInput(1, ctypes.pointer(command), ctypes.sizeof(command))
+        ctypes.windll.user32.mouse_event(MOUSEEVENTF_WHEEL, 0, 0, amount, 0)
     except Exception as e:
         logger.error(f"Erro no scroll vertical: {e}")
 

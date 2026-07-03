@@ -1,0 +1,38 @@
+# ============================================================
+# .gitignore — Sensepad Desktop
+# ============================================================
+
+# ── Ambiente Virtual Python (venv) ──────────────────────────
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# ── Cache do Python ─────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# ── Distribuição / Build ────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+
+# ── Variáveis de ambiente e segredos ────────────────────────
+.env
+.env.*
+*.env
+
+# ── IDEs e Editores ─────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ── Sistema Operacional ─────────────────────────────────────
+Thumbs.db
+Desktop.ini
+.DS_Store
